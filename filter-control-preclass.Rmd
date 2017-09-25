@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Blain Morin | Pre-Class #3"
 output: html_document
 ---
 
@@ -9,20 +9,51 @@ output: html_document
 ### Question 1:
 
 Using a loop, print the integers from 1 to 50. 
+```{r}
+for (i in 1:50) {
+  print(i)
+}
 
+```
 ### Question 2:
 
 A.  Using a loop, add all the integers between 0 and 1000.
+```{r}
+y=0
+for (i in 0:1000){
+  y = y +i
+}
+
+y
+```
 
 B. Now, add all the EVEN integers between 0 and 1000 (hint: use seq())
+```{r}
 
+z = 0
+
+for (i in seq(from = 0, to = 1000, by = 2)) {
+  z = z + i
+}
+
+z
+```
 C. Now, repeat A and B WITHOUT using a loop.
+
+```{r}
+### A:
+sum(1:1000)
+
+### B:
+sum(seq(0,1000, by = 2))
+
+```
 
 ### Question 3:
 
 Here is a dataframe of survey data containing 5 questions :
 
-```{r, eval=FALSE}
+```{r}
 survey <- data.frame(
                      "participant" = c(1, 2, 3, 4, 5, 6),
                      "q1" = c(5, 3, 2, 7, 11, 0),
@@ -36,4 +67,37 @@ The response to each question should be an integer between 1 and 5. Obviously, w
 
 A. Using a loop, create a new dataframe called survey.clean where all the invalid values (those that are not integers between 1 and 5) are set to NA.
 
+```{r}
+
+survey.clean = survey
+
+for (i in 2:dim(survey.clean)[1]) {
+  vector = survey.clean [, i]
+  for (j in 1:length(vector)){
+    if (vector[j] > 5 | vector[j]< 1){
+      vector[j] = NA
+    } else {
+      vector[j] = vector[j]
+    }
+  }
+  survey.clean[, i] = vector
+}
+
+survey.clean
+```
 B. Now, again using a loop, add a new column to the dataframe called “invalid.answers” that indicates, for each participant, how many bad answers they gave.
+```{r}
+survey.clean2 = survey.clean
+
+survey.clean2$invalid.answers = 0
+
+for (i in 1:dim(survey.clean2[1])){
+  vector = survey.clean[i, ]
+  survey.clean2$invalid.answers[i] = sum(is.na(vector))
+}
+
+survey.clean2
+```
+
+
+
